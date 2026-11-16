@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<a class="skip" href="#boardwrap">Skip to the board</a>
+<header class="top">
+  <div class="brand">
+    <span class="pulse" aria-hidden="true"></span>
+    <div>
+      <h1>TOKEN RADAR</h1>
+      <p class="tag">Which pre-token protocol is worth farming next — and what to do about it.</p>
+    </div>
+  </div>
+  <div class="meta" id="meta"></div>
+</header>
+
+<section class="stats" id="stats" aria-label="Board summary"></section>
+
+<nav class="tabs" aria-label="Views">
+  <button type="button" data-tab="pre-token" class="active">Pre-token board</button>
+  <button type="button" data-tab="live">Already trading</button>
+</nav>
+
+<section class="controls" aria-label="Filter and sort">
+  <label class="search">Search
+    <input id="q" type="search" placeholder="Protocol name or slug…" autocomplete="off">
+  </label>
+  <label>Category
+    <select id="category"><option value="all">All categories</option></select>
+  </label>
+  <label>Chain
+    <select id="chain"><option value="all">All chains</option></select>
+  </label>
+  <label>Sort by
+    <select id="sort">
+      <option value="implied">Implied value</option>
+      <option value="tvl">TVL</option>
+      <option value="growth">7-day change</option>
+      <option value="age">Age on record</option>
+      <option value="name">Name A–Z</option>
+    </select>
+  </label>
+  <button type="button" id="clear">Clear filters</button>
+</section>
+
+<div class="layout">
+  <main id="boardwrap" tabindex="-1">
+    <p class="count" id="count"></p>
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="implied">#</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="tvl">TVL</th>
+          <th data-sort="growth">7d</th>
+          <th>Age</th>
+          <th data-sort="implied">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches these filters. Clear them and try again.</p>
+  </main>
+  <aside class="detail" id="detail" aria-label="Protocol detail">
+    <p class="detail-hint">Click a row to open its detail view: the model's own numbers and the farm plan.</p>
+  </aside>
+</div>
+
+<footer class="foot">
+  <h2>How the radar scores</h2>
+  <p class="formula">implied = TVL × 0.30 × growth × maturity × breadth × momentum</p>
+  <p>Growth is the 7-day TVL change, clamped to −80…+200%, weighted 0.6. Maturity rises with the
+  days DefiLlama has tracked the protocol, from 0.70 to 1.20 over four years. Breadth adds 2% per
+  extra chain, up to five. Momentum adds 8% when growth is +25% or better and takes 8% away when
+  it is −25% or worse. Every number comes from the sealed snapshot alone — no name is ever
+  special-cased, and the page recomputes each row's value from the same figures the board carries.</p>
+  <p>“Records no token” means DefiLlama's record carries no token for the protocol; it is not proof
+  that none exists. Protocols whose token already trades sit in the <strong>Already trading</strong>
+  view at the market's own value, never in the ranking. Wrapped, staked and bridged products of a
+  token that trades are left out of the board. Implied value is this entry's own claim, never one
+  make.fun makes, and it does not predict whether or when a token is issued.</p>
+  <p class="src" id="src"></p>
+</footer>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
